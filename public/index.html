@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Gestor de vendas doces/pascoa anna julia</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+
+  </head>
+  <body>
+    <h1>Gestor de vendas doces/pascoa anna julia</h1>
+
+    <h2>Cadastro de gastos</h2>
+    <form action="/adicionarGasto" method="POST">
+      <label for="nomeGasto">Nome do produto:</label>
+      <input type="text" id="nomeGasto" name="nomeGasto" required>
+    
+      <label for="valorGasto">Valor do produto:</label>
+      <input type="number" id="valorGasto" name="valorGasto" step="0.01" min="0" required>
+    
+      <label for="dataGasto">Data de compra:</label>
+      <input type="date" id="dataGasto" name="dataGasto" required>
+    
+      <button type="submit" id="btnGasto">Cadastrar Gasto</button>
+    </form>
+    
+    
+    
+    
+
+    <h2>Cadastro de vendas</h2>
+    <form action="/adicionarvenda" method="POST">
+      <label for="nomeVenda">Nome do produto:</label>
+      <input type="text" id="nomeVenda" name="nomeVenda" required>
+
+      <label for="valorVenda">Valor do produto:</label>
+      <input type="number" id="valorVenda" name="valorVenda" step="0.01" min="0" required>
+
+      <label for="dataVenda">Data de venda:</label>
+      <input type="date" id="dataVenda" name="dataVenda" required>
+
+      <label for="nomeComprador">Nome do comprador:</label>
+      <input type="text" id="nomeComprador" name="nomeComprador" required>
+
+      <button type="submit" id="btnVenda">Cadastrar Venda</button>
+    </form>
+
+  </body>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <body>
+    <div class="ver-relatorio">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+      Ver relatório de vendas/gastos
+    </button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+  
+          <!-- Modal header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Relatório de vendas/gastos</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+  
+          <!-- Modal body -->
+          <div class="modal-body">
+            <h2>Tabela de gastos</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome do produto</th>
+                  <th>Valor</th>
+                  <th>Data de compra</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaGastos">
+              </tbody>
+            </table>
+  
+            <h2>Tabela de vendas</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome do produto</th>
+                  <th>Valor</th>
+                  <th>Data de venda</th>
+                  <th>Nome do comprador</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaVendas">
+              </tbody>
+            </table>
+  
+            <h2>Lucro</h2>
+            <p id="lucro"></p>
+          </div>
+  
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+
+    <div class="container">
+      <div class="infinite-scrolling"></div>
+    </div>
+
+  </body>
+

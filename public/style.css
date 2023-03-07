@@ -1,0 +1,174 @@
+/* Definindo a fonte padrão */
+body {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Estilo do cabeçalho */
+h1 {
+  font-size: 48px;
+  color: #ff5733;
+  text-align: center;
+  margin-top: 50px;
+}
+
+h2 {
+  font-size: 36px;
+  color: #ff5733;
+  text-align: center;
+  margin-top: 50px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Estilo do subtítulo */
+h3 {
+  font-size: 24px;
+  color: #ff5733;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Estilo dos formulários */
+form {
+  margin: 20px auto;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+  background-color: #f6e4b6;
+}
+
+form label {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #885b06;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="date"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+form button[type="submit"] {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff5733;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+form button[type="submit"]:hover {
+  background-color: #d84315;
+}
+
+/* Estilo das tabelas */
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+table th,
+table td {
+  padding: 10px;
+  text-align: left;
+}
+
+table th {
+  background-color: #ff5733;
+  color: #fff;
+  font-size: 18px;
+}
+
+table td {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Estilo do botão do modal */
+.btn-primary {
+  background-color: #ff5733;
+  border-color: #ff5733;
+  font-size: 24px;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #d84315;
+  border-color: #d84315;
+}
+
+/* Estilo do modal */
+.modal-header {
+  background-color: #ff5733;
+  color: #fff;
+  border-bottom: none;
+}
+
+.modal-title {
+  font-size: 36px;
+}
+
+.modal-body {
+  font-size: 18px;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+/* Estilo do lucro */
+#lucro {
+  font-size: 24px;
+  color: #ff5733;
+  font-weight: bold;
+}
+
+.ver-relatorio {
+  text-align: center;
+}
+.container {
+  overflow: hidden;
+}
+
+.infinite-scrolling {
+  position: fixed;
+  top: 0;
+
+  left: 0;
+  z-index: -1; /* Para colocar o elemento atrás do conteúdo */
+  background: url("https://static.vecteezy.com/system/resources/previews/001/928/973/original/rural-nature-road-scene-free-vector.jpg") repeat-x;
+  height: 100%;
+  width: 5760px; /* The image width times 3 */
+  animation: slide 60s linear infinite;
+}
+
+@keyframes slide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-1920px, 0, 0); /* The image width */
+  }
+}
+
+
+#footer {text-align: center;}
+
+
