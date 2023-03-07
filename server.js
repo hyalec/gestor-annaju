@@ -4,6 +4,8 @@ const path = require('path');
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
+const dontenv = require('dotenv');
+dontenv.config();
 
 const app = express();
 const db = new sqlite3.Database('./dados.db');
@@ -105,8 +107,8 @@ app.get('/lucro', (req, res) => {
 });
 
 
+const port = process.env.PORT || 3000
 
-
-app.listen(3000, () => {
-  console.log('Servidor iniciado na porta 3000');
+app.listen(port, () => {
+  console.log('Servidor iniciado na porta ' + port);
 });
