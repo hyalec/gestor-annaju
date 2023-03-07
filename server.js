@@ -4,8 +4,6 @@ const path = require('path');
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
-const dontenv = require('dotenv');
-dontenv.config();
 
 const app = express();
 const db = new sqlite3.Database('./dados.db');
@@ -56,10 +54,11 @@ app.post('/adicionarvenda', (req, res) => {
   const valorVenda = req.body.valorVenda;
   const dataVenda = req.body.dataVenda;
   const nomeComprador = req.body.nomeComprador;
+  const formaPagamento = req.body.formaPagamento;
 
-  const sql = `INSERT INTO vendas (nome_produto, valor_produto, data_comprou, nome_comprador) VALUES (?, ?, ?, ?)`;
+  const sql = `INSERT INTO vendas (nome_produto, valor_produto, data_comprou, nome_comprador,forma_pagamento) VALUES (?, ?, ?, ?, ?)`;
 
-  db.run(sql, [nomeVenda, valorVenda, dataVenda, nomeComprador], function(err) {
+  db.run(sql, [nomeVenda, valorVenda, dataVenda, nomeComprador, formaPagamento], function(err) {
     if (err) {
       console.error(err.message);
       res.status(500).send('Erro ao inserir gasto no banco de dados');
@@ -88,7 +87,7 @@ app.get('/vendas', (req, res) => {
       console.error(err.message);
       res.status(500).send('Erro ao buscar vendas no banco de dados');
     } else {
-      const vendas = rows.map(row => ({ nome: row.nome_produto, valor: row.valor_produto, data: row.data_comprou, comprador: row.nome_comprador }));
+      const vendas = rows.map(row => ({ nome: row.nome_produto, valor: row.valor_produto, data: row.data_comprou, comprador: row.nome_comprador, formapagamento: row.forma_pagamento}));
       res.json(vendas);
     }
   });
@@ -107,8 +106,8 @@ app.get('/lucro', (req, res) => {
 });
 
 
-const port = process.env.PORT || 3000
 
-app.listen(port, () => {
-  console.log('Servidor iniciado na porta ' + port);
+
+app.listen(3000, () => {
+  console.log('Servidor iniciado na porta 3000');
 });

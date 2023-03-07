@@ -16,7 +16,9 @@ $(document).ready(function() {
         $('#tabelaVendas').empty();
         // preenche a tabela de vendas com os dados retornados do servidor
         vendas.forEach(function(venda) {
-          $('#tabelaVendas').append('<tr><td>' + venda.nome + '</td><td>' + venda.valor + '</td><td>' + venda.data + '</td><td>' + venda.comprador + '</td></tr>');
+          $('#tabelaVendas').append('<tr><td style="text-align: center;">' + venda.nome + '</td><td style="text-align: center;">' + venda.valor + '</td><td style="text-align: center;">' + venda.data + '</td><td style="text-align: center;">' + venda.comprador + '</td><td style="text-align: center;">' + venda.formapagamento + '</td></tr>');
+
+
         });
       });
   

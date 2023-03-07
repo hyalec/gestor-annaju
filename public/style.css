@@ -19,6 +19,26 @@ h2 {
   font-family: 'Montserrat', sans-serif;
 }
 
+.menu-wrapper {
+  text-align: center;
+}
+.select-forma-pagamento {
+  display: block;
+  margin: 10px auto;
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 2px solid #ff5733;
+  color: #444;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.select-forma-pagamento option {
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
 /* Estilo do subtítulo */
 h3 {
   font-size: 24px;
@@ -140,6 +160,8 @@ table td {
   font-weight: bold;
 }
 
+
+
 .ver-relatorio {
   text-align: center;
 }
@@ -170,5 +192,9 @@ table td {
 
 
 #footer {text-align: center;}
+
+
+
+
 
 
