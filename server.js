@@ -47,7 +47,7 @@ app.post('/adicionarGasto', (req, res) => {
       res.status(500).send('Erro ao inserir gasto no banco de dados');
     } else {
       console.log(`Row inserted with ID ${this.lastID}`);
-      res.send('<script>alert("Gasto cadastrado!"); window.location.href="/";</script>');
+      res.send('Gasto cadastrado!');
     }
   });
 });
@@ -58,18 +58,25 @@ app.post('/adicionarvenda', (req, res) => {
   const dataVenda = req.body.dataVenda;
   const nomeComprador = req.body.nomeComprador;
   const formaPagamento = req.body.formaPagamento;
+  const qtdeVenda = Number(req.body.qtdeVenda) || 1;
+
+  const valorTotalVenda = qtdeVenda * valorVenda;
 
   const sql = `INSERT INTO vendas (nome_produto, valor_produto, data_comprou, nome_comprador,forma_pagamento) VALUES (?, ?, ?, ?, ?)`;
 
-  db.run(sql, [nomeVenda, valorVenda, dataVenda, nomeComprador, formaPagamento], function(err) {
-    if (err) {
-      console.error(err.message);
-      res.status(500).send('Erro ao inserir gasto no banco de dados');
-    } else {
-      console.log(`Row inserted with ID ${this.lastID}`);
-      res.send('<script>alert("Nova venda cadastrada! 🎉"); window.location.href="/";</script>');
+  db.run(
+    sql,
+    [nomeVenda, valorTotalVenda, dataVenda, nomeComprador, formaPagamento],
+    function (err) {
+      if (err) {
+        console.error(err.message);
+        res.status(500).send('Erro ao inserir gasto no banco de dados');
+      } else {
+        console.log(`Row inserted with ID ${this.lastID}`);
+        res.send('Nova venda cadastrada! 🎉');
+      }
     }
-  });
+  );
 });
 
 app.get('/gastos', (req, res) => {

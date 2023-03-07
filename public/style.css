@@ -22,6 +22,7 @@ h2 {
 .menu-wrapper {
   text-align: center;
 }
+
 .select-forma-pagamento {
   display: block;
   margin: 10px auto;
@@ -49,6 +50,9 @@ h3 {
 
 /* Estilo dos formulários */
 form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
   margin: 20px auto;
   max-width: 500px;
   padding: 20px;
@@ -59,13 +63,13 @@ form {
 
 form label {
   display: block;
-  font-size: 18px;
   margin-bottom: 5px;
+  font-size: 18px;
   color: #885b06;
 }
 
 form input[type="text"],
-form input[type="number"],
+input[type="number"],
 form input[type="date"],
 form select {
   display: block;
@@ -168,6 +172,11 @@ table td {
 
 .container {
   overflow: hidden;
+}
+
+.modal .modal-dialog {
+  max-width: 800px;
+  margin: 1.75rem auto;
 }
 
 .infinite-scrolling {
