@@ -35,10 +35,13 @@ app.post('/adicionarGasto', (req, res) => {
   const nomeGasto = req.body.nomeGasto;
   const valorGasto = req.body.valorGasto;
   const dataGasto = req.body.dataGasto;
+  const qtdeGasto = Number(req.body.qtdeGasto) || 1;
+
+  const valorTotalGasto = qtdeGasto * valorGasto;
 
   const sql = `INSERT INTO gastos (nome_produto, valor_produto, data_comprou) VALUES (?, ?, ?)`;
 
-  db.run(sql, [nomeGasto, valorGasto, dataGasto], function(err) {
+  db.run(sql, [nomeGasto, valorTotalGasto, dataGasto], function (err) {
     if (err) {
       console.error(err.message);
       res.status(500).send('Erro ao inserir gasto no banco de dados');
