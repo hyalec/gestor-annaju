@@ -139,6 +139,7 @@ app.delete('/venda/:id', (req, res) => {
 
   try {
     db.run(sql, [id]);
+    console.log(`Row venda deleted with ID ${id}`);
     return res.status(200).send();
   } catch {
     return res.status(500).send();
@@ -151,6 +152,7 @@ app.delete('/gasto/:id', (req, res) => {
 
   try {
     db.run(sql, [id]);
+    console.log(`Row gasto deleted with ID ${id}`);
     return res.status(200).send();
   } catch {
     return res.status(500).send();
