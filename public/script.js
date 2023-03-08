@@ -30,7 +30,7 @@ function preencheTabelaGastos(gastos) {
   gastos.forEach((gasto) => {
     TABELA_GASTOS.append(
       `
-      <tr>
+      <tr data-row-gasto-id=${gasto.id} >
         <td>
         ${gasto.nome}
         </td>
@@ -41,7 +41,7 @@ function preencheTabelaGastos(gastos) {
         ${gasto.data}
         </td>
         <td>
-          <button class="deletar-gasto-btn" data-row-gasto-id=${gasto.id} >Apagar</button>
+          <button class="deletar-gasto-btn" data-row-gasto-btn-id=${gasto.id} >Apagar</button>
         </td>
       </tr>`
     );
@@ -55,7 +55,7 @@ function preencheTabelaVendas(vendas) {
   vendas.forEach((venda) => {
     TABELA_VENDAS.append(
       `
-      <tr>
+      <tr data-row-venda-id=${venda.id}>
         <td style="text-align: center;">
         ${venda.nome}
         </td>
@@ -72,7 +72,7 @@ function preencheTabelaVendas(vendas) {
         ${venda.formapagamento}
         </td>
         <td>
-        <button class="deletar-venda-btn" data-row-venda-id=${venda.id} >Apagar</button>
+        <button class="deletar-venda-btn" data-row-venda-btn-id=${venda.id} >Apagar</button>
         </td>
       </tr>`
     );
@@ -82,7 +82,7 @@ function preencheTabelaVendas(vendas) {
 }
 
 function deletarLinhaGasto(event) {
-  const id = $(event.target).data('row-gasto-id');
+  const id = $(event.target).data('row-gasto-btn-id');
 
   $.ajax({
     url: `/gasto/${id}`,
@@ -95,7 +95,7 @@ function deletarLinhaGasto(event) {
 }
 
 function deletarLinhaVenda(event) {
-  const id = $(event.target).data('row-venda-id');
+  const id = $(event.target).data('row-venda-btn-id');
 
   $.ajax({
     url: `/venda/${id}`,
@@ -103,9 +103,8 @@ function deletarLinhaVenda(event) {
   })
     .done(() => {
       $(`tr[data-row-venda-id=${id}]`).remove();
-    }
-  )
-  .fail(exibeMensagemErro);
+    })
+    .fail(exibeMensagemErro);
 }
 
 function confirmaFormulario(event) {
