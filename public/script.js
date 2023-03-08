@@ -36,6 +36,9 @@ function preencheTabelaGastos(gastos) {
         <td>
         ${gasto.data}
         </td>
+        <td>
+          <button class="deletar-gasto-btn" data-rowid=${gasto.id} >Apagar</button>
+        </td>
       </tr>`
     );
   });
@@ -50,17 +53,20 @@ function preencheTabelaVendas(vendas) {
         <td style="text-align: center;">
         ${venda.nome}
         </td>
-      <td style="text-align: center;">
-      ${venda.valor}
+        <td style="text-align: center;">
+       ${venda.valor}
         </td>
-      <td style="text-align: center;">
-      ${venda.data}
+        <td style="text-align: center;">
+        ${venda.data}
         </td>
-      <td style="text-align: center;">
-      ${venda.comprador}
+        <td style="text-align: center;">
+        ${venda.comprador}
         </td>
-      <td style="text-align: center;">
-      ${venda.formapagamento}
+        <td style="text-align: center;">
+        ${venda.formapagamento}
+        </td>
+        <td>
+        <button class="deletar-venda-btn" data-rowid=${venda.id} >Apagar</button>
         </td>
       </tr>`
     );
