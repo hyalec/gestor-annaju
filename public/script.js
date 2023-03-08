@@ -11,7 +11,7 @@ const BTN_CONFIRMAR = $('#btnConfirmar');
 const SENHA_INPUT = $('#senha');
 const INPUT_DATE = $('input[type="date"]');
 
-console.log('carreguei')
+console.log('carreguei');
 
 function verificaSenha() {
   if (SENHA_INPUT.val() !== SENHA) {
@@ -19,6 +19,10 @@ function verificaSenha() {
     return false;
   }
   return true;
+}
+
+function exibeMensagemErro() {
+  window.alert('Ocorreu um erro ao carregar os dados. Por favor, tente novamente.');
 }
 
 function preencheTabelaGastos(gastos) {
@@ -37,11 +41,13 @@ function preencheTabelaGastos(gastos) {
         ${gasto.data}
         </td>
         <td>
-          <button class="deletar-gasto-btn" data-rowid=${gasto.id} >Apagar</button>
+          <button class="deletar-gasto-btn" data-row-gasto-id=${gasto.id} >Apagar</button>
         </td>
       </tr>`
     );
   });
+
+  $('.deletar-gasto-btn').click(deletarLinhaGasto);
 }
 
 function preencheTabelaVendas(vendas) {
@@ -66,15 +72,40 @@ function preencheTabelaVendas(vendas) {
         ${venda.formapagamento}
         </td>
         <td>
-        <button class="deletar-venda-btn" data-rowid=${venda.id} >Apagar</button>
+        <button class="deletar-venda-btn" data-row-venda-id=${venda.id} >Apagar</button>
         </td>
       </tr>`
     );
   });
+
+  $('.deletar-venda-btn').click(deletarLinhaVenda);
 }
 
-function exibeMensagemErro() {
-  window.alert('Ocorreu um erro ao carregar os dados. Por favor, tente novamente.');
+function deletarLinhaGasto(event) {
+  const id = $(event.target).data('row-gasto-id');
+
+  $.ajax({
+    url: `/gasto/${id}`,
+    type: 'DELETE',
+  })
+    .done(() => {
+      $(`tr[data-row-gasto-id=${id}]`).remove();
+    })
+    .fail(exibeMensagemErro);
+}
+
+function deletarLinhaVenda(event) {
+  const id = $(event.target).data('row-venda-id');
+
+  $.ajax({
+    url: `/venda/${id}`,
+    type: 'DELETE',
+  })
+    .done(() => {
+      $(`tr[data-row-venda-id=${id}]`).remove();
+    }
+  )
+  .fail(exibeMensagemErro);
 }
 
 function confirmaFormulario(event) {
@@ -99,17 +130,17 @@ $(document).ready(() => {
     $.get('/vendas').done(preencheTabelaVendas).fail(exibeMensagemErro);
 
     // busca o lucro do servidor
-    $.get('/lucro').done((lucro) => {
-      // exibe o lucro na página
-      $('#lucro').text(lucro);
-    }).fail(exibeMensagemErro);
+    $.get('/lucro')
+      .done((lucro) => {
+        // exibe o lucro na página
+        $('#lucro').text(lucro);
+      })
+      .fail(exibeMensagemErro);
   });
 
   INPUT_DATE.val(moment().format('YYYY-MM-DD'));
 
-  // ao clicar no botão de cadastrar gasto abrir modal de confirmação
   FORM_GASTOS.on('submit', confirmaFormulario);
 
-  // ao clicar no botão de cadastrar venda abrir modal de confirmação
   FORM_VENDAS.on('submit', confirmaFormulario);
 });

@@ -133,6 +133,30 @@ app.get('/lucro', (req, res) => {
   );
 });
 
+app.delete('/venda/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = `DELETE FROM vendas WHERE id = ?`;
+
+  try {
+    db.run(sql, [id]);
+    return res.status(200).send();
+  } catch {
+    return res.status(500).send();
+  }
+});
+
+app.delete('/gasto/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = `DELETE FROM gastos WHERE id = ?`;
+
+  try {
+    db.run(sql, [id]);
+    return res.status(200).send();
+  } catch {
+    return res.status(500).send();
+  }
+});
+
 app.listen(3000, () => {
   console.log('Servidor iniciado na porta 3000');
 });
