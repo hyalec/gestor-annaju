@@ -14,11 +14,7 @@ const INPUT_DATE = $('input[type="date"]');
 console.log('carreguei');
 
 function verificaSenha() {
-  if (SENHA_INPUT.val() !== SENHA) {
-    window.alert('Senha incorreta!');
-    return false;
-  }
-  return true;
+  return SENHA_INPUT.val() === SENHA;
 }
 
 function exibeMensagemErro() {
@@ -84,27 +80,46 @@ function preencheTabelaVendas(vendas) {
 function deletarLinhaGasto(event) {
   const id = $(event.target).data('row-gasto-btn-id');
 
-  $.ajax({
-    url: `/gasto/${id}`,
-    type: 'DELETE',
-  })
-    .done(() => {
-      $(`tr[data-row-gasto-id=${id}]`).remove();
+  MODAL_CONFIRMACAO.modal('show');
+
+  BTN_CONFIRMAR.on('click', () => {
+    const aSenhaEValida = verificaSenha();
+    if (!aSenhaEValida) {
+      return;
+    }
+
+    $.ajax({
+      url: `/gasto/${id}`,
+      type: 'DELETE',
     })
-    .fail(exibeMensagemErro);
+      .done(() => {
+        $(`tr[data-row-gasto-id=${id}]`).remove();
+      })
+      .fail(exibeMensagemErro);
+  });
 }
 
 function deletarLinhaVenda(event) {
   const id = $(event.target).data('row-venda-btn-id');
 
-  $.ajax({
-    url: `/venda/${id}`,
-    type: 'DELETE',
-  })
-    .done(() => {
-      $(`tr[data-row-venda-id=${id}]`).remove();
+  MODAL_CONFIRMACAO.modal('show');
+
+  BTN_CONFIRMAR.on('click', () => {
+    const aSenhaEValida = verificaSenha();
+    if (!aSenhaEValida) {
+      return;
+    }
+
+    $.ajax({
+      url: `/venda/${id}`,
+      type: 'DELETE',
     })
-    .fail(exibeMensagemErro);
+      .done(() => {
+        $(`tr[data-row-venda-id=${id}]`).remove();
+      })
+      .fail(exibeMensagemErro);
+  });
+
 }
 
 function confirmaFormulario(event) {
