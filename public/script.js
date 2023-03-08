@@ -21,6 +21,11 @@ function exibeMensagemErro() {
   window.alert('Ocorreu um erro ao carregar os dados. Por favor, tente novamente.');
 }
 
+function formatarData(data) {
+  const dataFormatada = moment(data).format('DD/MM/YYYY');
+  return dataFormatada;
+}
+
 function preencheTabelaGastos(gastos) {
   TABELA_GASTOS.empty();
   gastos.forEach((gasto) => {
@@ -34,10 +39,12 @@ function preencheTabelaGastos(gastos) {
         ${gasto.valor}
         </td>
         <td>
-        ${gasto.data}
+        ${formatarData(gasto.data)}
         </td>
         <td>
-          <button class="deletar-gasto-btn" data-row-gasto-btn-id=${gasto.id} >Apagar</button>
+          <button class="deletar-gasto-btn deletar-btn" data-row-gasto-btn-id=${gasto.id}>
+            <i class="fa-solid fa-trash"></i>
+          </button>
         </td>
       </tr>`
     );
@@ -59,7 +66,7 @@ function preencheTabelaVendas(vendas) {
        ${venda.valor}
         </td>
         <td style="text-align: center;">
-        ${venda.data}
+        ${formatarData(venda.data)}
         </td>
         <td style="text-align: center;">
         ${venda.comprador}
@@ -68,7 +75,9 @@ function preencheTabelaVendas(vendas) {
         ${venda.formapagamento}
         </td>
         <td>
-        <button class="deletar-venda-btn" data-row-venda-btn-id=${venda.id} >Apagar</button>
+        <button class="deletar-venda-btn deletar-btn" data-row-venda-btn-id=${venda.id}>
+          <i class="fa-solid fa-trash"></i>
+        </button>
         </td>
       </tr>`
     );

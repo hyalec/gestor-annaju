@@ -188,6 +188,14 @@ table td {
   z-index: 1060;
 }
 
+.deletar-btn {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #777;
+}
+
 .infinite-scrolling {
   position: fixed;
   top: 0;
@@ -213,4 +221,15 @@ table td {
 
 #footer {
   text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  table th,
+  table td {
+    font-size: 11px;
+  }
+
+  .modal .modal-title, .modal h2 {
+    font-size: 18px;
+  }
 }
