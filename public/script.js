@@ -9,6 +9,7 @@ const MODAL_CONFIRMACAO = $('#modalConfirmacao');
 const MODAL_RESPOSTA = $('#modalResposta');
 const BTN_CONFIRMAR = $('#btnConfirmar');
 const SENHA_INPUT = $('#senha');
+const INPUT_DATE = $('input[type="date"]');
 
 console.log('carreguei')
 
@@ -97,6 +98,8 @@ $(document).ready(() => {
       $('#lucro').text(lucro);
     }).fail(exibeMensagemErro);
   });
+
+  INPUT_DATE.val(moment().format('YYYY-MM-DD'));
 
   // ao clicar no botão de cadastrar gasto abrir modal de confirmação
   FORM_GASTOS.on('submit', confirmaFormulario);

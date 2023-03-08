@@ -12,7 +12,7 @@
     <h1>Gestor de vendas Anna Julia</h1>
 
     <h2>Cadastro de gastos</h2>
-    <form action="/adicionarGasto" method="POST" id="formGastos" >
+    <form action="/adicionarGasto" method="POST" id="formGastos">
       <label for="nomeGasto">Nome do produto:</label>
       <input type="text" id="nomeGasto" name="nomeGasto" required />
 
@@ -78,17 +78,11 @@
 
       <button type="submit" id="btnVenda">Cadastrar Venda</button>
     </form>
-  </body>
 
-  <link
-    rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-  />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-  <body>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
     <div class="ver-relatorio">
       <button
         type="button"
@@ -180,14 +174,14 @@
         </div>
       </div>
     </div>
+    <div class="container">
+      <div class="infinite-scrolling"></div>
+    </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="./script.js"></script>
-
-    <div class="container">
-      <div class="infinite-scrolling"></div>
-    </div>
   </body>
 </html>
