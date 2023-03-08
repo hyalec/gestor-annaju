@@ -37,16 +37,16 @@ function preencheTabelaGastos(gastos) {
     TABELA_GASTOS.append(
       `
       <tr data-row-gasto-id=${gasto.id} >
-        <td>
+        <td data-label="Nome do produto">
         ${gasto.nome}
         </td>
-        <td>
+        <td data-label="Valor">
         ${formatarPreco(gasto.valor)}
         </td>
-        <td>
+        <td data-label="Data da Compra">
         ${formatarData(gasto.data)}
         </td>
-        <td>
+        <td data-label="Apagar">
           <button class="deletar-gasto-btn deletar-btn" data-row-gasto-btn-id=${gasto.id}>
             <i class="fa-solid fa-trash"></i>
           </button>
@@ -64,22 +64,22 @@ function preencheTabelaVendas(vendas) {
     TABELA_VENDAS.append(
       `
       <tr data-row-venda-id=${venda.id}>
-        <td style="text-align: center;">
+        <td data-label="Nome do produto">
         ${venda.nome}
         </td>
-        <td style="text-align: center;">
+        <td data-label="Valor">
        ${formatarPreco(venda.valor)}
         </td>
-        <td style="text-align: center;">
+        <td data-label="Data de Venda">
         ${formatarData(venda.data)}
         </td>
-        <td style="text-align: center;">
+        <td data-label="Nome do comprador">
         ${venda.comprador}
         </td>
-        <td style="text-align: center;">
+        <td data-label="Forma de pagamento">
         ${venda.formapagamento}
         </td>
-        <td>
+        <td data-label="Apagar">
         <button class="deletar-venda-btn deletar-btn" data-row-venda-btn-id=${venda.id}>
           <i class="fa-solid fa-trash"></i>
         </button>
