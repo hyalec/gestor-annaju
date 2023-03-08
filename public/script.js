@@ -26,6 +26,11 @@ function formatarData(data) {
   return dataFormatada;
 }
 
+function formatarPreco(preco) {
+  const precoFormatado = preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  return precoFormatado;
+}
+
 function preencheTabelaGastos(gastos) {
   TABELA_GASTOS.empty();
   gastos.forEach((gasto) => {
@@ -36,7 +41,7 @@ function preencheTabelaGastos(gastos) {
         ${gasto.nome}
         </td>
         <td>
-        ${gasto.valor}
+        ${formatarPreco(gasto.valor)}
         </td>
         <td>
         ${formatarData(gasto.data)}
@@ -63,7 +68,7 @@ function preencheTabelaVendas(vendas) {
         ${venda.nome}
         </td>
         <td style="text-align: center;">
-       ${venda.valor}
+       ${formatarPreco(venda.valor)}
         </td>
         <td style="text-align: center;">
         ${formatarData(venda.data)}
