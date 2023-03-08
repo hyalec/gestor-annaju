@@ -24,7 +24,18 @@ function preencheTabelaGastos(gastos) {
   TABELA_GASTOS.empty();
   gastos.forEach((gasto) => {
     TABELA_GASTOS.append(
-      `<tr><td>${gasto.nome}</td><td>${gasto.valor}</td><td>${gasto.data}</td></tr>`
+      `
+      <tr>
+        <td>
+        ${gasto.nome}
+        </td>
+        <td>
+        ${gasto.valor}
+        </td>
+        <td>
+        ${gasto.data}
+        </td>
+      </tr>`
     );
   });
 }
@@ -33,7 +44,24 @@ function preencheTabelaVendas(vendas) {
   TABELA_VENDAS.empty();
   vendas.forEach((venda) => {
     TABELA_VENDAS.append(
-      `<tr><td style="text-align: center;">${venda.nome}</td><td style="text-align: center;">${venda.valor}</td><td style="text-align: center;">${venda.data}</td><td style="text-align: center;">${venda.comprador}</td><td style="text-align: center;">${venda.formapagamento}</td></tr>`
+      `
+      <tr>
+        <td style="text-align: center;">
+        ${venda.nome}
+        </td>
+      <td style="text-align: center;">
+      ${venda.valor}
+        </td>
+      <td style="text-align: center;">
+      ${venda.data}
+        </td>
+      <td style="text-align: center;">
+      ${venda.comprador}
+        </td>
+      <td style="text-align: center;">
+      ${venda.formapagamento}
+        </td>
+      </tr>`
     );
   });
 }
