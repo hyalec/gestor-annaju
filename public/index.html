@@ -5,10 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestor de vendas doces/pascoa anna julia</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
       integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
   </head>
 
   <body>
@@ -146,28 +155,52 @@
           <!-- Modal body -->
           <div class="modal-body">
             <h2>Tabela de gastos</h2>
-            <table>
+            <p class="no-margin">Filtrar resultados por data</p>
+            <div class="input-group">
+              <div class="input-group-text" id="btnGroupAddon">
+                <i class="fa-solid fa-calendar"></i>
+              </div>
+              <input type="text" name="date-range-gastos" class="form-control" />
+              <button class="btn btn-primary" id="filtrarGastos" type="button">
+                Aplicar
+              </button>
+            </div>
+            <table class="tabela">
               <thead>
                 <tr>
-                  <th>Nome do produto</th>
+                  <th>Produto</th>
                   <th>Valor</th>
-                  <th>Data de compra</th>
-                  <th>Apagar</th>
+                  <th>Data</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody id="tabelaGastos"></tbody>
             </table>
 
             <h2>Tabela de vendas</h2>
-            <table>
+            <p class="no-margin">Filtrar resultados por data</p>
+            <div class="input-group">
+              <div class="input-group-text" id="btnGroupAddon">
+                <i class="fa-solid fa-calendar"></i>
+              </div>
+              <input type="text" name="date-range-vendas" class="form-control" />
+              <button
+                class="btn btn-primary aplicar-raio-vendas"
+                id="filtrarVendas"
+                type="button"
+              >
+                Aplicar
+              </button>
+            </div>
+            <table class="tabela">
               <thead>
                 <tr>
-                  <th>Nome do produto</th>
+                  <th>Produto</th>
                   <th>Valor</th>
-                  <th>Data de venda</th>
-                  <th>Nome do comprador</th>
+                  <th>Data</th>
+                  <th>Comprador</th>
                   <th>Forma de pagamento</th>
-                  <th>Apagar</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody id="tabelaVendas"></tbody>
@@ -186,6 +219,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    ></script>
     <script src="./script.js"></script>
   </body>
 </html>

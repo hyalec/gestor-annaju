@@ -10,8 +10,10 @@ const MODAL_RESPOSTA = $('#modalResposta');
 const BTN_CONFIRMAR = $('#btnConfirmar');
 const SENHA_INPUT = $('#senha');
 const INPUT_DATE = $('input[type="date"]');
-
-console.log('carreguei');
+const INPUT_DATERANGE_GASTOS = $('input[name="date-range-gastos"]');
+const INPUT_DATERANGE_VENDAS = $('input[name="date-range-vendas"]');
+const BTN_FILTRAR_GASTOS = $('#filtrarGastos');
+const BTN_FILTRAR_VENDAS = $('#filtrarVendas');
 
 function verificaSenha() {
   return SENHA_INPUT.val() === SENHA;
@@ -22,12 +24,15 @@ function exibeMensagemErro() {
 }
 
 function formatarData(data) {
-  const dataFormatada = moment(data).format('DD/MM/YYYY');
+  const dataFormatada = moment(data).format('DD/MM/YY');
   return dataFormatada;
 }
 
 function formatarPreco(preco) {
-  const precoFormatado = preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const precoFormatado = preco.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  });
   return precoFormatado;
 }
 
@@ -36,17 +41,17 @@ function preencheTabelaGastos(gastos) {
   gastos.forEach((gasto) => {
     TABELA_GASTOS.append(
       `
-      <tr data-row-gasto-id=${gasto.id} >
-        <td data-label="Nome do produto">
+      <tr data-row-gasto-id=${gasto.id} class="tabela-linha">
+        <td data-label="Nome do produto" class="nome-produto">
         ${gasto.nome}
         </td>
-        <td data-label="Valor">
+        <td data-label="Valor" class="valor-produto">
         ${formatarPreco(gasto.valor)}
         </td>
-        <td data-label="Data da Compra">
+        <td data-label="Data da Compra" class="data-compra">
         ${formatarData(gasto.data)}
         </td>
-        <td data-label="Apagar">
+        <td data-label="Apagar" class="deletar-linha">
           <button class="deletar-gasto-btn deletar-btn" data-row-gasto-btn-id=${gasto.id}>
             <i class="fa-solid fa-trash"></i>
           </button>
@@ -133,7 +138,6 @@ function deletarLinhaVenda(event) {
       })
       .fail(exibeMensagemErro);
   });
-
 }
 
 function confirmaFormulario(event) {
@@ -149,6 +153,27 @@ function confirmaFormulario(event) {
     this.submit();
   });
 }
+
+const dataPickerConfig = {
+  locale: {
+    format: 'DD/MM/YY',
+  },
+
+  startDate: moment().subtract(1, 'month'),
+  endDate: moment(),
+
+  ranges: {
+    Hoje: [moment(), moment()],
+    Ontem: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+    'Últimos 7 dias': [moment().subtract(6, 'days'), moment()],
+    'Últimos 30 dias': [moment().subtract(29, 'days'), moment()],
+    'Este mês': [moment().startOf('month'), moment().endOf('month')],
+    'Mês passado': [
+      moment().subtract(1, 'month').startOf('month'),
+      moment().subtract(1, 'month').endOf('month'),
+    ],
+  },
+};
 
 $(document).ready(() => {
   $('#myModal').on('show.bs.modal', () => {
@@ -167,8 +192,10 @@ $(document).ready(() => {
   });
 
   INPUT_DATE.val(moment().format('YYYY-MM-DD'));
-
   FORM_GASTOS.on('submit', confirmaFormulario);
-
   FORM_VENDAS.on('submit', confirmaFormulario);
+  INPUT_DATERANGE_GASTOS.daterangepicker(dataPickerConfig);
+  INPUT_DATERANGE_VENDAS.daterangepicker(dataPickerConfig);
+
+  $('[data-range-key="Custom Range"]').text('Personalizado');
 });

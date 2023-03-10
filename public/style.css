@@ -76,7 +76,7 @@ form select {
   padding: 10px;
   font-size: 16px;
   margin-bottom: 20px;
-  border: none;
+  border: 1px solid black;
   border-radius: 5px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -100,7 +100,7 @@ form button[type='submit']:hover {
 }
 
 /* Estilo das tabelas */
-table {
+.tabela {
   margin: 20px auto;
   border-collapse: collapse;
   width: 100%;
@@ -108,19 +108,19 @@ table {
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-table th,
-table td {
+.tabela th,
+.tabela td {
   padding: 10px;
   text-align: left;
 }
 
-table th {
+.tabela th {
   background-color: #ff5733;
   color: #fff;
   font-size: 18px;
 }
 
-table td {
+.tabela td {
   border-bottom: 1px solid #ddd;
 }
 
@@ -196,6 +196,10 @@ table td {
   color: #777;
 }
 
+.no-margin {
+  margin: 0;
+}
+
 .infinite-scrolling {
   position: fixed;
   top: 0;
@@ -224,60 +228,68 @@ table td {
 }
 
 @media screen and (max-width: 768px) {
-  table th,
-  table td {
-    font-size: 11px;
+  .modal-title {
+    font-size: 1.3rem;
   }
 
-  .modal .modal-title, .modal h2 {
-    font-size: 18px;
+  .tabela {
+    box-shadow: none;
   }
 
-    table {
-    border: 0;
+  .tabela th {
+    display: none;
   }
 
-  table caption {
-    font-size: 1.3em;
+  .tabela td {
+    border-bottom: none;
   }
-  
-  table thead {
-    border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
+
+  #tabelaGastos td {
     padding: 0;
-    position: absolute;
-    width: 1px;
   }
-  
-  table tr {
-    border-bottom: 3px solid #ddd;
+
+  #tabelaGastos tr {
+    height: 3.5rem;
+    position: relative;
+    padding: 0;
+    font-size: 12px;
     display: block;
-    margin-bottom: .625em;
-    border: 1px solid red;
   }
-  
-  table td {
-    border-bottom: 1px solid #ddd;
-    display: block;
-    font-size: .8em;
-    text-align: right;
-  }
-  
-  table td::before {
-    /*
-    * aria-label has no advantage, it won't be read inside a table
-    content: attr(aria-label);
-    */
-    content: attr(data-label);
-    float: left;
+
+  #tabelaGastos .nome-produto {
     font-weight: bold;
-    text-transform: uppercase;
+    font-size: 15px;
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    white-space: nowrap;
+    width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  
-  table td:last-child {
-    border-bottom: 0;
+
+  #tabelaGastos .valor-produto {
+    position: absolute;
+    top: 0.5rem;
+    right: 3.5rem;
+    font-size: 15px;
+    color: #d23333;
+  }
+
+  #tabelaGastos .valor-produto::before {
+    content: '-';
+  }
+
+  #tabelaGastos .data-compra {
+    position: absolute;
+    top: 1.7rem;
+    right: 3.5rem;
+    color: #777;
+  }
+
+  #tabelaGastos .deletar-linha {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
   }
 }
