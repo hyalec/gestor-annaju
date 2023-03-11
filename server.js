@@ -99,6 +99,50 @@ app.get('/gastos', (req, res) => {
   });
 });
 
+app.get('/gastos-filtrados-por-data', (req, res) => {
+  const { inicio, fim } = req.query;
+
+  const sql = `SELECT * FROM gastos WHERE data_comprou BETWEEN ? AND ?`;
+
+  db.all(sql, [inicio, fim], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Erro ao buscar gastos no banco de dados');
+    } else {
+      const gastos = rows.map((row) => ({
+        id: row.id,
+        nome: row.nome_produto,
+        valor: row.valor_produto,
+        data: row.data_comprou,
+      }));
+      res.json(gastos);
+    }
+  });
+});
+
+app.get('/vendas-filtrados-por-data', (req, res) => {
+  const { inicio, fim } = req.query;
+
+  const sql = `SELECT * FROM vendas WHERE data_comprou BETWEEN ? AND ?`;
+
+  db.all(sql, [inicio, fim], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Erro ao buscar vendas no banco de dados');
+    } else {
+      const vendas = rows.map((row) => ({
+        id: row.id,
+        nome: row.nome_produto,
+        valor: row.valor_produto,
+        data: row.data_comprou,
+        comprador: row.nome_comprador,
+        formapagamento: row.forma_pagamento,
+      }));
+      res.json(vendas);
+    }
+  });
+});
+
 app.get('/vendas', (req, res) => {
   db.all('SELECT * FROM vendas', (err, rows) => {
     if (err) {

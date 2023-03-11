@@ -10,8 +10,8 @@ const MODAL_RESPOSTA = $('#modalResposta');
 const BTN_CONFIRMAR = $('#btnConfirmar');
 const SENHA_INPUT = $('#senha');
 const INPUT_DATE = $('input[type="date"]');
-const INPUT_DATERANGE_GASTOS = $('input[name="date-range-gastos"]');
-const INPUT_DATERANGE_VENDAS = $('input[name="date-range-vendas"]');
+const INPUT_FILTRAR_DATA_GASTOS = $('input[name="date-range-gastos"]');
+const INPUT_FILTRAR_DATA_VENDAS = $('input[name="date-range-vendas"]');
 const BTN_FILTRAR_GASTOS = $('#filtrarGastos');
 const BTN_FILTRAR_VENDAS = $('#filtrarVendas');
 
@@ -170,6 +170,30 @@ function confirmaFormulario(event) {
   });
 }
 
+function filtrarDataTabela(tipo, inicio, fim) {
+
+  $.ajax({
+    url: `/${tipo}s-filtrados-por-data`,
+    type: 'GET',
+    data: {
+      inicio,
+      fim,
+    },
+  })
+    .done((gastos) => {
+      tipo === 'gasto' ? preencheTabelaGastos(gastos) : preencheTabelaVendas(gastos);
+    })
+    .fail(exibeMensagemErro);
+}
+
+function aplicarFiltro(event, picker) {
+  const tipo = $(event.target).data('tipo');
+  const inicio = picker.startDate.format('YYYY-MM-DD');
+  const fim = picker.endDate.format('YYYY-MM-DD');
+
+  filtrarDataTabela(tipo, inicio, fim);
+}
+
 const dataPickerConfig = {
   locale: {
     format: 'DD/MM/YY',
@@ -188,6 +212,7 @@ const dataPickerConfig = {
       moment().subtract(1, 'month').startOf('month'),
       moment().subtract(1, 'month').endOf('month'),
     ],
+    'Todo o período': [moment('2021-01-01'), moment()],
   },
 };
 
@@ -212,8 +237,8 @@ $(document).ready(() => {
   INPUT_DATE.val(moment().format('YYYY-MM-DD'));
   FORM_GASTOS.on('submit', confirmaFormulario);
   FORM_VENDAS.on('submit', confirmaFormulario);
-  INPUT_DATERANGE_GASTOS.daterangepicker(dataPickerConfig);
-  INPUT_DATERANGE_VENDAS.daterangepicker(dataPickerConfig);
+  INPUT_FILTRAR_DATA_GASTOS.daterangepicker(dataPickerConfig).on('apply.daterangepicker', aplicarFiltro);
+  INPUT_FILTRAR_DATA_VENDAS.daterangepicker(dataPickerConfig).on('apply.daterangepicker', aplicarFiltro);
 
   $('[data-range-key="Custom Range"]').text('Personalizado');
 });
