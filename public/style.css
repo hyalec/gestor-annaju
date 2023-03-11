@@ -22,6 +22,7 @@ h2 {
 .menu-wrapper {
   text-align: center;
 }
+
 .select-forma-pagamento {
   display: block;
   margin: 10px auto;
@@ -38,7 +39,6 @@ h2 {
   font-family: 'Montserrat', sans-serif;
 }
 
-
 /* Estilo do subtítulo */
 h3 {
   font-size: 24px;
@@ -49,6 +49,9 @@ h3 {
 
 /* Estilo dos formulários */
 form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
   margin: 20px auto;
   max-width: 500px;
   padding: 20px;
@@ -59,14 +62,15 @@ form {
 
 form label {
   display: block;
-  font-size: 18px;
   margin-bottom: 5px;
+  font-size: 18px;
   color: #885b06;
 }
 
-form input[type="text"],
-form input[type="number"],
-form input[type="date"] {
+form input[type='text'],
+input[type='number'],
+form input[type='date'],
+form select {
   display: block;
   width: 100%;
   padding: 10px;
@@ -77,7 +81,11 @@ form input[type="date"] {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-form button[type="submit"] {
+.senha {
+  outline: 1px solid #ff5733;
+}
+
+form button[type='submit'] {
   display: block;
   margin: 20px auto;
   padding: 10px 20px;
@@ -91,12 +99,12 @@ form button[type="submit"] {
   transition: all 0.3s ease-in-out;
 }
 
-form button[type="submit"]:hover {
+form button[type='submit']:hover {
   background-color: #d84315;
 }
 
 /* Estilo das tabelas */
-table {
+.tabela {
   margin: 20px auto;
   border-collapse: collapse;
   width: 100%;
@@ -104,20 +112,28 @@ table {
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-table th,
-table td {
+.tabela th,
+.tabela td {
   padding: 10px;
   text-align: left;
 }
 
-table th {
+.tabela th {
   background-color: #ff5733;
   color: #fff;
   font-size: 18px;
 }
 
-table td {
+.tabela td {
   border-bottom: 1px solid #ddd;
+}
+
+.tabela .forma-pagamento div {
+  display: inline-block;
+}
+
+#tabelaVendas .forma-pagamento .icone-pagamento {
+  display: none;
 }
 
 /* Estilo do botão do modal */
@@ -160,13 +176,40 @@ table td {
   font-weight: bold;
 }
 
-
-
 .ver-relatorio {
   text-align: center;
+  margin-bottom: 1rem;
 }
+
 .container {
   overflow: hidden;
+}
+
+.modal .modal-dialog {
+  max-width: 800px;
+  margin: 1.75rem auto;
+}
+
+.modal-content {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px,
+    rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
+    rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+#modalConfirmacao {
+  z-index: 1060;
+}
+
+.deletar-btn {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #777;
+}
+
+.no-margin {
+  margin: 0;
 }
 
 .infinite-scrolling {
@@ -175,7 +218,9 @@ table td {
 
   left: 0;
   z-index: -1; /* Para colocar o elemento atrás do conteúdo */
-  background: url("https://static.vecteezy.com/system/resources/previews/001/928/973/original/rural-nature-road-scene-free-vector.jpg") repeat-x;
+  background: url('https://static.vecteezy.com/system/resources/previews/001/928/973/original/rural-nature-road-scene-free-vector.jpg')
+    repeat-x;
+  background-size: contain;
   height: 100%;
   width: 5760px; /* The image width times 3 */
   animation: slide 60s linear infinite;
@@ -190,11 +235,125 @@ table td {
   }
 }
 
+#footer {
+  text-align: center;
+}
 
-#footer {text-align: center;}
+.relatorio-geral {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+}
 
+.relatorio-geral p {
+  margin: 0;
+}
 
+@media screen and (max-width: 768px) {
+  .relatorio-geral {
+  display: flex;
+  justify-content: space-between;
+}
 
+  .modal-title {
+    font-size: 1.3rem;
+  }
 
+  .tabela {
+    box-shadow: none;
+  }
 
+  .tabela thead {
+    display: none;
+  }
 
+  .tabela td {
+    border-bottom: none;
+    padding: 0;
+  }
+
+  .tabela tr {
+    height: 3.5rem;
+    position: relative;
+    padding: 0;
+    font-size: 12px;
+    display: block;
+  }
+
+  .tabela .nome-produto {
+    font-weight: bold;
+    font-size: 15px;
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    white-space: nowrap;
+    width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #tabelaGastos .nome-produto {
+    left: 1rem;
+  }
+
+  .tabela .valor-produto {
+    position: absolute;
+    top: 0.5rem;
+    right: 3.5rem;
+    font-size: 15px;
+  }
+  
+  #tabelaGastos .valor-produto {
+    color: #d23333;
+  }
+
+  #tabelaVendas .valor-produto {
+    color: #33d233;
+  }
+
+  #tabelaGastos .valor-produto::before {
+    content: '-';
+  }
+
+  #tabelaVendas .valor-produto::before {
+    content: '+';
+  }
+
+  .tabela .data {
+    position: absolute;
+    top: 1.7rem;
+    right: 3.5rem;
+    color: #777;
+  }
+
+  #tabelaVendas .nome-comprador {
+    position: absolute;
+    top: 1.7rem;
+    left: 2rem;
+    color: #777;
+  }
+
+  #tabelaVendas .nome-comprador::before {
+    content: 'Por ';
+  }
+
+  #tabelaVendas .forma-pagamento {
+    position: absolute;
+    top: 1.7rem;
+    left: 1rem;
+  }
+
+  #tabelaVendas .forma-pagamento div {
+    display: none;
+  }
+
+  #tabelaVendas .forma-pagamento .icone-pagamento {
+    display: inline;
+  }
+
+  .tabela .deletar-linha {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
