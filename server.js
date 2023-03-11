@@ -162,22 +162,6 @@ app.get('/vendas', (req, res) => {
   });
 });
 
-app.get('/lucro', (req, res) => {
-  db.all(
-    'SELECT (SELECT SUM(valor_produto) FROM vendas) - (SELECT SUM(valor_produto) FROM gastos) AS lucro',
-    (err, rows) => {
-      if (err) {
-        console.error(err.message);
-        res.status(500).send('Erro ao buscar lucro no banco de dados');
-      } else {
-        const lucro = rows[0].lucro;
-        const formatarLucro = lucro.toFixed(2);
-        res.json(formatarLucro);
-      }
-    }
-  );
-});
-
 app.delete('/venda/:id', (req, res) => {
   const id = req.params.id;
   const sql = `DELETE FROM vendas WHERE id = ?`;

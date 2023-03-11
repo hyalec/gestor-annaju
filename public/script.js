@@ -14,6 +14,8 @@ const INPUT_FILTRAR_DATA_GASTOS = $('input[name="date-range-gastos"]');
 const INPUT_FILTRAR_DATA_VENDAS = $('input[name="date-range-vendas"]');
 const BTN_FILTRAR_GASTOS = $('#filtrarGastos');
 const BTN_FILTRAR_VENDAS = $('#filtrarVendas');
+let GASTOS = [{ id: 1, valor: 0 }];
+let VENDAS = [{ id: 1, valor: 0 }];
 
 function verificaSenha() {
   return SENHA_INPUT.val() === SENHA;
@@ -38,6 +40,8 @@ function formatarPreco(preco) {
 
 function preencheTabelaGastos(gastos) {
   TABELA_GASTOS.empty();
+  GASTOS = gastos;
+  $('#total-gastos').text(formatarPreco(pegarTotalGastos()));
   gastos.forEach((gasto) => {
     TABELA_GASTOS.append(
       `
@@ -45,7 +49,7 @@ function preencheTabelaGastos(gastos) {
         <td data-label="Nome do produto" class="nome-produto">
         ${gasto.nome}
         </td>
-        <td data-label="Valor" class="valor-produto">
+        <td data-label="Valor" class="valor-produto valor-gasto">
         ${formatarPreco(gasto.valor)}
         </td>
         <td data-label="Data da Compra" class="data">
@@ -53,7 +57,7 @@ function preencheTabelaGastos(gastos) {
         </td>
         <td data-label="Apagar" class="deletar-linha">
           <button class="deletar-gasto-btn deletar-btn" data-row-gasto-btn-id=${gasto.id}>
-            <i class="fa-solid fa-trash"></i>
+            <i class="fa-solid fa-trash" data-row-gasto-btn-id=${gasto.id}></i>
           </button>
         </td>
       </tr>`
@@ -65,6 +69,10 @@ function preencheTabelaGastos(gastos) {
 
 function preencheTabelaVendas(vendas) {
   TABELA_VENDAS.empty();
+  VENDAS = vendas;
+  $('#total-vendas').text(formatarPreco(pegarTotalVendas()));
+  $('#total-lucro').text(formatarPreco(pegarTotalLucro()));
+  $('#porcentagem-lucro').text(porcentagemDeLucro().toFixed(2) + '%');
   vendas.forEach((venda) => {
     TABELA_VENDAS.append(
       `
@@ -72,7 +80,7 @@ function preencheTabelaVendas(vendas) {
         <td data-label="Nome do produto" class="nome-produto">
         ${venda.nome}
         </td>
-        <td data-label="Valor" class="valor-produto">
+        <td data-label="Valor" class="valor-produto valor-venda">
        ${formatarPreco(venda.valor)}
         </td>
         <td data-label="Data de Venda" class="data">
@@ -87,7 +95,7 @@ function preencheTabelaVendas(vendas) {
         </td>
         <td data-label="Apagar" class="deletar-linha">
         <button class="deletar-venda-btn deletar-btn" data-row-venda-btn-id=${venda.id}>
-          <i class="fa-solid fa-trash"></i>
+          <i class="fa-solid fa-trash" data-row-venda-btn-id=${venda.id}></i>
         </button>
         </td>
       </tr>`
@@ -136,6 +144,8 @@ function deletarLinhaGasto(event) {
 
 function deletarLinhaVenda(event) {
   const id = $(event.target).data('row-venda-btn-id');
+
+  console.log(id);
 
   MODAL_CONFIRMACAO.modal('show');
 
@@ -194,6 +204,34 @@ function aplicarFiltro(event, picker) {
   filtrarDataTabela(tipo, inicio, fim);
 }
 
+function pegarTotalVendas() {
+  const totalVendas = VENDAS.reduce((prev, crr) => prev + crr.valor, 0);
+  return totalVendas;
+}
+
+function pegarTotalGastos() {
+  const totalGastos = GASTOS.reduce((prev, crr) => prev + crr.valor, 0);
+  return totalGastos;
+}
+
+function pegarTotalLucro() {
+  const totalVendas = pegarTotalVendas();
+  const totalGastos = pegarTotalGastos();
+
+  const totalLucro = totalVendas - totalGastos;
+
+  return totalLucro;
+}
+
+function porcentagemDeLucro() {
+  const valorTotalVenda = pegarTotalVendas();
+  const valorTotalGasto = pegarTotalGastos();
+
+  const porcentagem = (valorTotalVenda / valorTotalGasto) * 100;
+
+  return isNaN(porcentagem) ? 0 : porcentagem;
+}
+
 const dataPickerConfig = {
   locale: {
     format: 'DD/MM/YY',
@@ -222,16 +260,6 @@ $(document).ready(() => {
     $.get('/gastos').done(preencheTabelaGastos).fail(exibeMensagemErro);
     // busca os dados de vendas do servidor
     $.get('/vendas').done(preencheTabelaVendas).fail(exibeMensagemErro);
-
-    // busca o lucro do servidor
-    $.get('/lucro')
-      .done((lucro) => {
-        // exibe o lucro na página
-        const lucroParaNumero = Number(lucro);
-        const lucroFormatado = formatarPreco(lucroParaNumero);
-        $('#lucro').text(formatarPreco(lucroFormatado));
-      })
-      .fail(exibeMensagemErro);
   });
 
   INPUT_DATE.val(moment().format('YYYY-MM-DD'));

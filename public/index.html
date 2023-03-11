@@ -123,7 +123,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <input type="number" id="senha" />
+            <input type="number" id="senha" class="senha" />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -160,7 +160,12 @@
               <div class="input-group-text" id="btnGroupAddon">
                 <i class="fa-solid fa-calendar"></i>
               </div>
-              <input type="text" name="date-range-gastos" class="form-control" data-tipo="gasto" />
+              <input
+                type="text"
+                name="date-range-gastos"
+                class="form-control"
+                data-tipo="gasto"
+              />
             </div>
             <table class="tabela">
               <thead>
@@ -180,7 +185,12 @@
               <div class="input-group-text" id="btnGroupAddon">
                 <i class="fa-solid fa-calendar"></i>
               </div>
-              <input type="text" name="date-range-vendas" class="form-control" data-tipo="venda" />
+              <input
+                type="text"
+                name="date-range-vendas"
+                class="form-control"
+                data-tipo="venda"
+              />
             </div>
             <table class="tabela">
               <thead>
@@ -196,8 +206,23 @@
               <tbody id="tabelaVendas"></tbody>
             </table>
 
-            <h2>Lucro</h2>
-            <p id="lucro"></p>
+            <h2>Total</h2>
+            <div class="relatorio-geral">
+              <div>
+                <strong>Informações</strong>
+                <p>Total de Gastos</p>
+                <p>Total de Vendas</p>
+                <p>Total de Lucro</p>
+                <p>Porcentagem de Lucro</p>
+              </div>
+              <div>
+                <strong>Valores</strong>
+                <p id="total-gastos"></p>
+                <p id="total-vendas"></p>
+                <p id="total-lucro"></p>
+                <p id="porcentagem-lucro"></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
