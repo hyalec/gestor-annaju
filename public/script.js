@@ -38,10 +38,15 @@ function formatarPreco(preco) {
   return precoFormatado;
 }
 
+function formatarPorcentagem(porcentagem) {
+  const porcentagemFormatada = porcentagem.toFixed(2).replace('.', ',') + '%';
+  return porcentagemFormatada;
+}
+
 function preencheTabelaGastos(gastos) {
   TABELA_GASTOS.empty();
   GASTOS = gastos;
-  $('#total-gastos').text(formatarPreco(pegarTotalGastos()));
+  atualizarRelatorio();
   gastos.forEach((gasto) => {
     TABELA_GASTOS.append(
       `
@@ -70,9 +75,7 @@ function preencheTabelaGastos(gastos) {
 function preencheTabelaVendas(vendas) {
   TABELA_VENDAS.empty();
   VENDAS = vendas;
-  $('#total-vendas').text(formatarPreco(pegarTotalVendas()));
-  $('#total-lucro').text(formatarPreco(pegarTotalLucro()));
-  $('#porcentagem-lucro').text(porcentagemDeLucro().toFixed(2) + '%');
+  atualizarRelatorio();
   vendas.forEach((venda) => {
     TABELA_VENDAS.append(
       `
@@ -137,6 +140,9 @@ function deletarLinhaGasto(event) {
     })
       .done(() => {
         $(`tr[data-row-gasto-id=${id}]`).remove();
+        const encontraGasto = GASTOS.find((gasto) => gasto.id === id);
+        GASTOS.splice(GASTOS.indexOf(encontraGasto), 1);
+        atualizarRelatorio();
       })
       .fail(exibeMensagemErro);
   });
@@ -161,6 +167,9 @@ function deletarLinhaVenda(event) {
     })
       .done(() => {
         $(`tr[data-row-venda-id=${id}]`).remove();
+        const encontraVenda = VENDAS.find((venda) => venda.id === id);
+        VENDAS.splice(VENDAS.indexOf(encontraVenda), 1);
+        atualizarRelatorio();
       })
       .fail(exibeMensagemErro);
   });
@@ -225,11 +234,23 @@ function pegarTotalLucro() {
 
 function porcentagemDeLucro() {
   const valorTotalVenda = pegarTotalVendas();
-  const valorTotalGasto = pegarTotalGastos();
+  const valorTotalLucro = pegarTotalLucro();
 
-  const porcentagem = (valorTotalVenda / valorTotalGasto) * 100;
+  const porcentagemDeLucro = (valorTotalLucro / valorTotalVenda) * 100;
 
-  return isNaN(porcentagem) ? 0 : porcentagem;
+  return isNaN(porcentagemDeLucro) || !isFinite(porcentagemDeLucro) ? 0 : porcentagemDeLucro;
+}
+
+function atualizarRelatorio() {
+  const totalVendas = pegarTotalVendas();
+  const totalGastos = pegarTotalGastos();
+  const totalLucro = pegarTotalLucro();
+  const porcentagemLucro = porcentagemDeLucro();
+
+  $('#total-vendas').text(formatarPreco(totalVendas));
+  $('#total-gastos').text(formatarPreco(totalGastos));
+  $('#total-lucro').text(formatarPreco(totalLucro));
+  $('#porcentagem-lucro').text(formatarPorcentagem(porcentagemLucro));
 }
 
 const dataPickerConfig = {
