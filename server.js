@@ -127,7 +127,8 @@ app.get('/lucro', (req, res) => {
         res.status(500).send('Erro ao buscar lucro no banco de dados');
       } else {
         const lucro = rows[0].lucro;
-        res.json(lucro);
+        const formatarLucro = lucro.toFixed(2);
+        res.json(formatarLucro);
       }
     }
   );

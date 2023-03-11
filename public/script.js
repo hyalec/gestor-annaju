@@ -202,7 +202,9 @@ $(document).ready(() => {
     $.get('/lucro')
       .done((lucro) => {
         // exibe o lucro na página
-        $('#lucro').text(lucro);
+        const lucroParaNumero = Number(lucro);
+        const lucroFormatado = formatarPreco(lucroParaNumero);
+        $('#lucro').text(formatarPreco(lucroFormatado));
       })
       .fail(exibeMensagemErro);
   });
