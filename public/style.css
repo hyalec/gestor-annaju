@@ -124,6 +124,14 @@ form button[type='submit']:hover {
   border-bottom: 1px solid #ddd;
 }
 
+.tabela .forma-pagamento div {
+  display: inline-block;
+}
+
+#tabelaVendas .forma-pagamento .icone-pagamento {
+  display: none;
+}
+
 /* Estilo do botão do modal */
 .btn-primary {
   background-color: #ff5733;
@@ -236,19 +244,16 @@ form button[type='submit']:hover {
     box-shadow: none;
   }
 
-  .tabela th {
+  .tabela thead {
     display: none;
   }
 
   .tabela td {
     border-bottom: none;
-  }
-
-  #tabelaGastos td {
     padding: 0;
   }
 
-  #tabelaGastos tr {
+  .tabela tr {
     height: 3.5rem;
     position: relative;
     padding: 0;
@@ -256,7 +261,7 @@ form button[type='submit']:hover {
     display: block;
   }
 
-  #tabelaGastos .nome-produto {
+  .tabela .nome-produto {
     font-weight: bold;
     font-size: 15px;
     position: absolute;
@@ -268,26 +273,66 @@ form button[type='submit']:hover {
     text-overflow: ellipsis;
   }
 
-  #tabelaGastos .valor-produto {
+  #tabelaGastos .nome-produto {
+    left: 1rem;
+  }
+
+  .tabela .valor-produto {
     position: absolute;
     top: 0.5rem;
     right: 3.5rem;
     font-size: 15px;
+  }
+  
+  #tabelaGastos .valor-produto {
     color: #d23333;
+  }
+
+  #tabelaVendas .valor-produto {
+    color: #33d233;
   }
 
   #tabelaGastos .valor-produto::before {
     content: '-';
   }
 
-  #tabelaGastos .data-compra {
+  #tabelaVendas .valor-produto::before {
+    content: '+';
+  }
+
+  .tabela .data {
     position: absolute;
     top: 1.7rem;
     right: 3.5rem;
     color: #777;
   }
 
-  #tabelaGastos .deletar-linha {
+  #tabelaVendas .nome-comprador {
+    position: absolute;
+    top: 1.7rem;
+    left: 2rem;
+    color: #777;
+  }
+
+  #tabelaVendas .nome-comprador::before {
+    content: 'Por ';
+  }
+
+  #tabelaVendas .forma-pagamento {
+    position: absolute;
+    top: 1.7rem;
+    left: 1rem;
+  }
+
+  #tabelaVendas .forma-pagamento div {
+    display: none;
+  }
+
+  #tabelaVendas .forma-pagamento .icone-pagamento {
+    display: inline;
+  }
+
+  .tabela .deletar-linha {
     position: absolute;
     top: 1rem;
     right: 1rem;

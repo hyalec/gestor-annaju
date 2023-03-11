@@ -48,7 +48,7 @@ function preencheTabelaGastos(gastos) {
         <td data-label="Valor" class="valor-produto">
         ${formatarPreco(gasto.valor)}
         </td>
-        <td data-label="Data da Compra" class="data-compra">
+        <td data-label="Data da Compra" class="data">
         ${formatarData(gasto.data)}
         </td>
         <td data-label="Apagar" class="deletar-linha">
@@ -69,22 +69,23 @@ function preencheTabelaVendas(vendas) {
     TABELA_VENDAS.append(
       `
       <tr data-row-venda-id=${venda.id}>
-        <td data-label="Nome do produto">
+        <td data-label="Nome do produto" class="nome-produto">
         ${venda.nome}
         </td>
-        <td data-label="Valor">
+        <td data-label="Valor" class="valor-produto">
        ${formatarPreco(venda.valor)}
         </td>
-        <td data-label="Data de Venda">
+        <td data-label="Data de Venda" class="data">
         ${formatarData(venda.data)}
         </td>
-        <td data-label="Nome do comprador">
+        <td data-label="Nome do comprador" class="nome-comprador">
         ${venda.comprador}
         </td>
-        <td data-label="Forma de pagamento">
-        ${venda.formapagamento}
+        <td data-label="Forma de pagamento" class="forma-pagamento">
+          <div>${venda.formapagamento}</div>
+          <i class="${pegarIconeDePagamento(venda.formapagamento)} icone-pagamento"></i>
         </td>
-        <td data-label="Apagar">
+        <td data-label="Apagar" class="deletar-linha">
         <button class="deletar-venda-btn deletar-btn" data-row-venda-btn-id=${venda.id}>
           <i class="fa-solid fa-trash"></i>
         </button>
@@ -94,6 +95,21 @@ function preencheTabelaVendas(vendas) {
   });
 
   $('.deletar-venda-btn').click(deletarLinhaVenda);
+}
+
+function pegarIconeDePagamento(formaPagamento) {
+  switch (formaPagamento) {
+    case 'Dinheiro':
+      return 'fa-solid fa-money-bill';
+    case 'Cartão de crédito':
+      return 'fa-solid fa-credit-card';
+    case 'Cartão de débito':
+      return 'fa-regular fa-credit-card';
+    case 'Pix':
+      return 'fa-brands fa-pix';
+    default:
+      return 'fa-solid fa-money-bill';
+  }
 }
 
 function deletarLinhaGasto(event) {
