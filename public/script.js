@@ -142,6 +142,7 @@ function deletarLinhaGasto(event) {
         $(`tr[data-row-gasto-id=${id}]`).remove();
         const encontraGasto = GASTOS.find((gasto) => gasto.id === id);
         GASTOS.splice(GASTOS.indexOf(encontraGasto), 1);
+        localStorage.setItem('gastos', JSON.stringify(GASTOS));
         atualizarRelatorio();
       })
       .fail(exibeMensagemErro);
@@ -169,6 +170,7 @@ function deletarLinhaVenda(event) {
         $(`tr[data-row-venda-id=${id}]`).remove();
         const encontraVenda = VENDAS.find((venda) => venda.id === id);
         VENDAS.splice(VENDAS.indexOf(encontraVenda), 1);
+        localStorage.setItem('vendas', JSON.stringify(VENDAS));
         atualizarRelatorio();
       })
       .fail(exibeMensagemErro);
@@ -190,7 +192,6 @@ function confirmaFormulario(event) {
 }
 
 function filtrarDataTabela(tipo, inicio, fim) {
-
   $.ajax({
     url: `/${tipo}s-filtrados-por-data`,
     type: 'GET',
@@ -238,7 +239,9 @@ function porcentagemDeLucro() {
 
   const porcentagemDeLucro = (valorTotalLucro / valorTotalVenda) * 100;
 
-  return isNaN(porcentagemDeLucro) || !isFinite(porcentagemDeLucro) ? 0 : porcentagemDeLucro;
+  return isNaN(porcentagemDeLucro) || !isFinite(porcentagemDeLucro)
+    ? 0
+    : porcentagemDeLucro;
 }
 
 function atualizarRelatorio() {
@@ -251,6 +254,40 @@ function atualizarRelatorio() {
   $('#total-gastos').text(formatarPreco(totalGastos));
   $('#total-lucro').text(formatarPreco(totalLucro));
   $('#porcentagem-lucro').text(formatarPorcentagem(porcentagemLucro));
+}
+
+function preencheGastosLocalStorageOuBanco(gastos) {
+  const gastosLocalStorage = JSON.parse(localStorage.getItem('gastos')) || [];
+  if (gastos.length) {
+    localStorage.setItem('gastos', JSON.stringify(gastos));
+  }
+  if (gastosLocalStorage.length > 0 && gastos.length === 0) {
+    $.ajax({
+      url: '/gastos',
+      type: 'POST',
+      data: {
+        gastos: gastosLocalStorage,
+      },
+      error: exibeMensagemErro,
+    });
+  }
+}
+
+function preencheVendasLocalStorageOuBanco(vendas) {
+  const vendasLocalStorage = JSON.parse(localStorage.getItem('vendas')) || [];
+  if (vendas.length) {
+    localStorage.setItem('vendas', JSON.stringify(vendas));
+  }
+  if (vendasLocalStorage.length > 0 && vendas.length === 0) {
+    $.ajax({
+      url: '/vendas',
+      type: 'POST',
+      data: {
+        vendas: vendasLocalStorage,
+      },
+      error: exibeMensagemErro,
+    });
+  }
 }
 
 const dataPickerConfig = {
@@ -276,6 +313,9 @@ const dataPickerConfig = {
 };
 
 $(document).ready(() => {
+  $.get('/gastos').done(preencheGastosLocalStorageOuBanco).fail(exibeMensagemErro);
+  $.get('/vendas').done(preencheVendasLocalStorageOuBanco).fail(exibeMensagemErro);
+
   $('#myModal').on('show.bs.modal', () => {
     // busca os dados de gastos do servidor
     $.get('/gastos').done(preencheTabelaGastos).fail(exibeMensagemErro);
@@ -286,8 +326,14 @@ $(document).ready(() => {
   INPUT_DATE.val(moment().format('YYYY-MM-DD'));
   FORM_GASTOS.on('submit', confirmaFormulario);
   FORM_VENDAS.on('submit', confirmaFormulario);
-  INPUT_FILTRAR_DATA_GASTOS.daterangepicker(dataPickerConfig).on('apply.daterangepicker', aplicarFiltro);
-  INPUT_FILTRAR_DATA_VENDAS.daterangepicker(dataPickerConfig).on('apply.daterangepicker', aplicarFiltro);
+  INPUT_FILTRAR_DATA_GASTOS.daterangepicker(dataPickerConfig).on(
+    'apply.daterangepicker',
+    aplicarFiltro
+  );
+  INPUT_FILTRAR_DATA_VENDAS.daterangepicker(dataPickerConfig).on(
+    'apply.daterangepicker',
+    aplicarFiltro
+  );
 
   $('[data-range-key="Custom Range"]').text('Personalizado');
 });

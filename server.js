@@ -99,6 +99,63 @@ app.get('/gastos', (req, res) => {
   });
 });
 
+app.get('/vendas', (req, res) => {
+  db.all('SELECT * FROM vendas', (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Erro ao buscar vendas no banco de dados');
+    } else {
+      const vendas = rows.map((row) => ({
+        id: row.id,
+        nome: row.nome_produto,
+        valor: row.valor_produto,
+        data: row.data_comprou,
+        comprador: row.nome_comprador,
+        formapagamento: row.forma_pagamento,
+      }));
+      res.json(vendas);
+    }
+  });
+});
+
+app.post('/gastos', (req, res) => {
+  const gastos = req.body.gastos;
+
+  const sql = `INSERT INTO gastos (nome_produto, valor_produto, data_comprou) VALUES (?, ?, ?)`;
+
+  const stmt = db.prepare(sql);
+
+  gastos.forEach((gasto) => {
+    stmt.run(gasto.nome, gasto.valor, gasto.data);
+  });
+
+  stmt.finalize();
+
+  res.send();
+});
+
+app.post('/vendas', (req, res) => {
+  const vendas = req.body.vendas;
+
+  const sql = `INSERT INTO vendas (nome_produto, valor_produto, nome_comprador, forma_pagamento, data_comprou) VALUES (?, ?, ?, ?, ?)`;
+
+  const stmt = db.prepare(sql);
+
+  vendas.forEach((venda) => {
+    stmt.run(
+      venda.nome,
+      venda.valor,
+      venda.comprador,
+      venda.formapagamento,
+      venda.data
+    );
+  });
+
+  stmt.finalize();
+
+  res.send();
+});
+
 app.get('/gastos-filtrados-por-data', (req, res) => {
   const { inicio, fim } = req.query;
 
@@ -126,25 +183,6 @@ app.get('/vendas-filtrados-por-data', (req, res) => {
   const sql = `SELECT * FROM vendas WHERE data_comprou BETWEEN ? AND ?`;
 
   db.all(sql, [inicio, fim], (err, rows) => {
-    if (err) {
-      console.error(err.message);
-      res.status(500).send('Erro ao buscar vendas no banco de dados');
-    } else {
-      const vendas = rows.map((row) => ({
-        id: row.id,
-        nome: row.nome_produto,
-        valor: row.valor_produto,
-        data: row.data_comprou,
-        comprador: row.nome_comprador,
-        formapagamento: row.forma_pagamento,
-      }));
-      res.json(vendas);
-    }
-  });
-});
-
-app.get('/vendas', (req, res) => {
-  db.all('SELECT * FROM vendas', (err, rows) => {
     if (err) {
       console.error(err.message);
       res.status(500).send('Erro ao buscar vendas no banco de dados');
